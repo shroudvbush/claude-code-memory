@@ -21,7 +21,17 @@ from pathlib import Path
 from datetime import datetime
 
 CALENDAR_ROOT = Path(os.path.expanduser("~/.claude/calendar"))
-MEMORY_ROOT = Path(os.path.expanduser("~/.claude/projects/-home-huangshuai/memory"))
+
+def _find_memory_root() -> Path:
+    """Auto-discover the Claude Code project memory directory."""
+    projects_dir = Path(os.path.expanduser("~/.claude/projects"))
+    if projects_dir.exists():
+        for d in projects_dir.iterdir():
+            if d.is_dir() and (d / "memory").exists():
+                return d / "memory"
+    return projects_dir / "-home-unknown" / "memory"
+
+MEMORY_ROOT = _find_memory_root()
 CHROMA_DB = Path(os.path.expanduser("~/.claude/.chroma_db"))
 
 

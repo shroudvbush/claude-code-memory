@@ -22,7 +22,17 @@ from datetime import datetime, timezone, timedelta
 
 HEARTBEAT_STATE = Path(os.path.expanduser("~/.claude/.heartbeat-state.json"))
 CALENDAR_ROOT = Path(os.path.expanduser("~/.claude/calendar"))
-MEMORY_ROOT = Path(os.path.expanduser("~/.claude/projects/-home-huangshuai/memory"))
+
+def _find_memory_root() -> Path:
+    """Auto-discover the Claude Code project memory directory."""
+    projects_dir = Path(os.path.expanduser("~/.claude/projects"))
+    if projects_dir.exists():
+        for d in projects_dir.iterdir():
+            if d.is_dir() and (d / "memory").exists():
+                return d / "memory"
+    return projects_dir / "-home-unknown" / "memory"
+
+MEMORY_ROOT = _find_memory_root()
 TZ = timezone(timedelta(hours=8))  # Asia/Shanghai
 
 
@@ -64,7 +74,7 @@ def main():
         issues.append(
             f"🔧 距上次记忆提炼已有 {days_since(state.get('lastMaintenance'))} 天。"
             f"建议执行：读取最近 3 天的 ~/.claude/calendar/*/摘要.md，"
-            f"提炼到 ~/.claude/projects/-home-huangshuai/memory/"
+            f"提炼到 {MEMORY_ROOT}"
         )
 
     # 检查 3：MEMORY.md 是否太旧？

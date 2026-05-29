@@ -51,8 +51,8 @@ cat CLAUDE-template.md >> ~/.claude/CLAUDE.md
 ### Step 2：部署长期记忆模板
 
 ```bash
-mkdir -p ~/.claude/projects/-home-huangshuai/memory/
-cp memory/*.md ~/.claude/projects/-home-huangshuai/memory/
+mkdir -p ~/.claude/projects/-home-$(whoami)/memory/
+cp memory/*.md ~/.claude/projects/-home-$(whoami)/memory/
 ```
 
 ### Step 3：部署脚本
