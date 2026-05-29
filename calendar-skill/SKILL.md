@@ -61,7 +61,7 @@ grep -rl "关键词" ~/.claude/calendar/*/完整记录/*.md
 
 **级别 4：搜索长期记忆**
 ```bash
-grep -rl "关键词" ~/.claude/projects/-home-$(whoami)/memory/*.md
+grep -rl "关键词" ~/.claude/projects/-*/memory/*.md
 ```
 
 **注意事项：**

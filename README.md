@@ -1,5 +1,7 @@
 # Claude Code Memory System
 
+中文 | [English](README_EN.md)
+
 为 Claude Code 构建的三层持续性记忆系统，灵感来源于 QClaw 的记忆架构。
 
 ## 是什么
@@ -51,8 +53,10 @@ cat CLAUDE-template.md >> ~/.claude/CLAUDE.md
 ### Step 2：部署长期记忆模板
 
 ```bash
-mkdir -p ~/.claude/projects/-home-$(whoami)/memory/
-cp memory/*.md ~/.claude/projects/-home-$(whoami)/memory/
+# Claude Code 用 -home-<user> (Linux) 或 -Users-<user> (macOS) 作为项目目录名
+PROJ_DIR=$(echo "$HOME" | sed 's|^/||; s|/|-|g')
+mkdir -p ~/.claude/projects/-${PROJ_DIR}/memory/
+cp memory/*.md ~/.claude/projects/-${PROJ_DIR}/memory/
 ```
 
 ### Step 3：部署脚本
